@@ -1,0 +1,14 @@
+[Unit]
+Description=Asistente de voz LUNA con LLaMA y Vosk
+After=network.target sound.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/asistente_luna/asistente.py
+WorkingDirectory=/home/pi/asistente_luna
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

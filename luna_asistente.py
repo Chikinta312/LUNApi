@@ -1,38 +1,31 @@
-import speech_recognition as sr
-import pyttsx3
+import os
 import requests
 import json
 import re
+import pyttsx3
+import sounddevice as sd
+import numpy as np
+import speech_recognition as sr
 from datetime import datetime, timedelta
-import locale
-import feedparser
-import winsound  # Para emitir un beep en Windows
 from bs4 import BeautifulSoup
+import feedparser
 
-# === Configuración Inicial ===
-
+# === Inicializar pyttsx3 ===
 engine = pyttsx3.init()
-engine.setProperty('rate', 150)
-engine.setProperty('voice', 'spanish')
-
-try:
-    locale.setlocale(locale.LC_TIME, "es_ES.UTF-8")
-except locale.Error:
-    locale.setlocale(locale.LC_TIME, "")  # Configuración por defecto si falla
-
-# === Funciones de Voz ===
+engine.setProperty('rate', 170)
+engine.setProperty('volume', 1.0)
+engine.setProperty('voice', engine.getProperty('voices')[0].id)  # Puedes cambiar el índice si deseas otra voz
 
 def speak(text):
     print(f"Luna: {text}")
     engine.say(text)
     engine.runAndWait()
 
-# === Reconocimiento de Voz ===
-
 def listen():
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        print("🎤 Di algo...")
+        print("🎙️ Di algo...")
+        recognizer.adjust_for_ambient_noise(source)
         audio = recognizer.listen(source)
     try:
         return recognizer.recognize_google(audio, language="es-ES")
@@ -41,8 +34,6 @@ def listen():
     except sr.RequestError:
         speak("Error de conexión con el servicio de reconocimiento.")
     return ""
-
-# === Procesamiento de Preguntas Locales ===
 
 def detectar_pregunta_local(texto):
     texto = texto.lower()
@@ -64,12 +55,10 @@ def detectar_pregunta_local(texto):
         return "falta_fecha"
     return None
 
-# === Funciones de Fecha y Hora ===
-
 def responder_pregunta_local(tipo):
     now = datetime.now()
     if tipo == "hora":
-        return f"La hora actual es {now.strftime('%H:%M')}."
+        return f"Es la hora {now.strftime('%H:%M')}."
     elif tipo == "fecha":
         return f"Hoy es {now.strftime('%A, %d de %B de %Y')}."
 
@@ -102,39 +91,37 @@ def dias_faltantes_para_fecha(texto):
     dias = (fecha_obj - hoy).days
     return f"Faltan {dias} días para el {fecha_obj.strftime('%d de %B de %Y')}."
 
-# === Noticias ===
-
 def obtener_noticias():
     url = "https://news.google.com/rss?hl=es-419&gl=PE&ceid=PE:es"
     noticias = feedparser.parse(url)
-
     if not noticias.entries:
         return "No se encontraron noticias."
-
     resultado = ""
     fuentes_usadas = set()
     contador = 0
-
     for entrada in noticias.entries:
         fuente = entrada.get("source", {}).get("title", "Fuente desconocida")
         if fuente in fuentes_usadas:
-            continue  # saltar fuentes repetidas
-
+            continue
         resumen = BeautifulSoup(entrada.summary, "html.parser").get_text().strip()
         contador += 1
-        resultado += f"NOTICIA {contador}: {resumen} ({fuente}).\n"
+        resultado += f"{resumen} (Fuente: {fuente}).\n"
         fuentes_usadas.add(fuente)
-
         if contador == 5:
             break
-
     if contador == 0:
         return "No se encontraron noticias únicas de diferentes fuentes."
-
     return resultado.strip()
 
-
-# === Comunicación con Ollama ===
+def consultar_clima(ciudad="Lima"):
+    try:
+        response = requests.get(f"https://wttr.in/{ciudad}?format=3", timeout=5)
+        if response.ok:
+            return response.text
+        else:
+            return "No se pudo obtener el clima en este momento."
+    except Exception:
+        return "No se pudo acceder al servicio del clima."
 
 def ask_ollama_streaming(prompt):
     try:
@@ -149,7 +136,7 @@ def ask_ollama_streaming(prompt):
             for line in response.iter_lines():
                 if line:
                     data = json.loads(line.decode("utf-8"))
-                    chunk = data.get("response", "")
+                    chunk = data.get("response", "").replace("*", "")
                     print(chunk, end="", flush=True)
                     buffer += chunk
                     if len(buffer) >= 20 and chunk.endswith((".", ",", " ")):
@@ -164,68 +151,41 @@ def ask_ollama_streaming(prompt):
     except Exception as e:
         speak(f"Error de conexión: {e}")
 
-# === Función Simulada: Clima ===
-
-def consultar_clima(ciudad="Lima"):
-    try:
-        response = requests.get(f"https://wttr.in/{ciudad}?format=3", timeout=5)
-        if response.ok:
-            return response.text
-        else:
-            return "No se pudo obtener el clima en este momento."
-    except Exception:
-        return "No se pudo acceder al servicio del clima."
-
-# === Función Simulada: Eventos ===
-
-
-# === Bucle Principal ===
-
 def main():
     speak("Hola, soy Luna. ¿En qué puedo ayudarte?")
     while True:
         user_input = listen()
         if not user_input:
             continue
-
         if "salir" in user_input.lower():
             speak("Adiós, hasta pronto.")
             break
-
         tipo = detectar_pregunta_local(user_input)
-
         if tipo == "hora" or tipo == "fecha":
             speak(responder_pregunta_local(tipo))
-
         elif tipo == "futuro":
             if "pasado mañana" in user_input:
                 speak(responder_fecha_futura("pasado mañana"))
             else:
                 speak(responder_fecha_futura("mañana"))
-
         elif tipo == "dias_semana":
             for d in ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]:
                 if d in user_input.lower():
                     speak(responder_dias_semana(d))
                     break
-
         elif tipo == "falta_fecha":
             speak(dias_faltantes_para_fecha(user_input))
-
         elif tipo == "noticias":
             speak(obtener_noticias())
-
         elif tipo == "clima":
             speak(consultar_clima())
-
         else:
-            print("Luna esta procesando tu solicitud con el modelo de lenguaje.")
+            print("Luna está procesando tu solicitud con el modelo de lenguaje.")
             ask_ollama_streaming(user_input)
-
-# === Ejecutar ===
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as e:
         speak(f"Ocurrió un error inesperado: {e}")
+

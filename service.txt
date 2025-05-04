@@ -3,14 +3,14 @@ Description=Luna Assistant
 After=network.target
 
 [Service]
-ExecStartPre=/bin/sleep 60  # Espera 60 segundos antes de iniciar el servicio
-ExecStart=/usr/bin/python3 /ruta/a/tu/script.py
-WorkingDirectory=/ruta/a/tu/directorio
+ExecStart=/home/luna/LUNApi/venv/bin/python /home/luna/LUNApi/luna.py
+WorkingDirectory=/home/luna/LUNApi
+Environment="PATH=/home/luna/LUNApi/venv/bin"
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-User=pi
-Group=pi
+User=luna
+Group=luna
 
 [Install]
 WantedBy=multi-user.target

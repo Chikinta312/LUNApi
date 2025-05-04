@@ -1,0 +1,6 @@
+Iniciar el asistente manualmente por terminal:
+source /home/luna/LUNApi/venv/bin/activate
+
+cd /home/luna/LUNApi
+
+python3 luna_asistente.py

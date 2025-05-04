@@ -7,7 +7,7 @@
 
 ### Hardware:
 
-* Raspberry Pi 5B
+* Raspberry Pi 5B (minimo de 4 gb ram para poder usar solo el Gemma3:1b)
 * Micrófono y altavoces conectados a la Raspberry Pi
 
 ### Software:

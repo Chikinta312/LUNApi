@@ -140,7 +140,7 @@ def ask_ollama_streaming(prompt):
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
-            json={"model": "gemma3:4b", "prompt": f"Responde en español de forma clara y natural. {prompt}", "stream": True},
+            json={"model": "gemma3:1b", "prompt": f"Responde en español de forma clara y natural. {prompt}", "stream": True},
             stream=True,
             timeout=60
         )

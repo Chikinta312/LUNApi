@@ -3,4 +3,3 @@ pyttsx3
 requests
 beautifulsoup4
 feedparser
-winsound

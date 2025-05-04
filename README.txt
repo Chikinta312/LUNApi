@@ -1,6 +1,3 @@
-¡Claro! Aquí tienes un ejemplo de cómo podría ser el archivo `README.md` para tu repositorio en GitHub, siguiendo las indicaciones que me diste:
-
----
 
 # Asistente Virtual Luna en Raspberry Pi 5B
 

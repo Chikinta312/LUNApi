@@ -1,0 +1,15 @@
+[Unit]
+Description=Luna Assistant
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /ruta/a/tu/script.py
+WorkingDirectory=/ruta/a/tu/directorio
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+Group=pi
+
+[Install]
+WantedBy=multi-user.target

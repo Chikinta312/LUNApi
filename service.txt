@@ -3,6 +3,7 @@ Description=Luna Assistant
 After=network.target
 
 [Service]
+ExecStartPre=/bin/sleep 60  # Espera 60 segundos antes de iniciar el servicio
 ExecStart=/usr/bin/python3 /ruta/a/tu/script.py
 WorkingDirectory=/ruta/a/tu/directorio
 StandardOutput=inherit

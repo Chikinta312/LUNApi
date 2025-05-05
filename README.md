@@ -3,15 +3,22 @@
 ````markdown
 # LUNA 3.0 – Asistente Virtual por Voz
 
-**LUNA 3.0** es un asistente virtual activado por comandos de voz, diseñado para brindar soporte y compañía a personas con movilidad reducida en el hogar. Desarrollado en Python y optimizado para funcionar en una Raspberry Pi 5, LUNA integra reconocimiento de voz, síntesis de voz natural, consultas inteligentes, lectura de noticias vía RSS, clima, calendario, y más.
+**LUNA 3.0** es un asistente virtual activado por comandos de voz, diseñado para brindar soporte
+y compañía a personas con movilidad reducida en el hogar. Desarrollado en Python y optimizado
+para funcionar en una Raspberry Pi 5, LUNA integra reconocimiento de voz, síntesis de voz natural,
+consultas inteligentes, lectura de noticias vía RSS, clima, calendario, y más.
 
 ---
 
 ## 📌 Introducción
 
-El objetivo de LUNA 3.0 es ofrecer un sistema de asistencia inteligente que permita interactuar por voz con tareas cotidianas, adaptándose al entorno doméstico de adultos mayores o personas con movilidad limitada.
+El objetivo de LUNA 3.0 es ofrecer un sistema de asistencia inteligente que permita interactuar
+por voz con tareas cotidianas, adaptándose al entorno doméstico de adultos mayores o personas
+con movilidad limitada.
 
-Este proyecto forma parte de una tesis universitaria y emplea tecnologías de código abierto como `SpeechRecognition`, `pyttsx3`, `feedparser`, `requests`, y `Ollama` (para acceder al modelo de lenguaje Gemma3 1B).
+Este proyecto forma parte de una tesis universitaria y emplea tecnologías de código abierto
+como `SpeechRecognition`, `pyttsx3`, `feedparser`, `requests`, y `Ollama`
+(para acceder al modelo de lenguaje Gemma3 1B).
 
 ---
 
@@ -74,7 +81,8 @@ python luna.py
 
 ## 🔒 Privacidad de los datos
 
-LUNA 3.0 procesa los datos de forma local en la Raspberry Pi, lo que garantiza un mayor control sobre la privacidad del usuario. No se envía información personal a servidores externos sin consentimiento.
+LUNA 3.0 procesa los datos de forma local en la Raspberry Pi, lo que garantiza un mayor control sobre 
+la privacidad del usuario. No se envía información personal a servidores externos sin consentimiento.
 
 ---
 

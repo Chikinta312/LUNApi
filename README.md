@@ -51,6 +51,9 @@ Para instalar tu asistente virtual **LUNA 3.0** en una Raspberry Pi 5 (u otro si
 
 Sigue los siguientes pasos para instalar y ejecutar LUNA 3.0 en tu dispositivo:
 
+Para Windows solo descargar el archivo Python y subirlo a tu Visual Studio Code, se recomienda instalar previamente Ollama en tu dispositivo
+con la version de su modelo que desee utilziar (el codigo esta diseñado para el modelo Gemma3:1b)
+
 ### 1. Clona el repositorio
 
 ```bash

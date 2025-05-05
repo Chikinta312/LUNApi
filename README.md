@@ -157,6 +157,3 @@ Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE)
 > “La voz es el puente entre la tecnología y la humanidad.”
 
 ```
-
-¿Te gustaría que también te genere el archivo `requirements.txt` para este proyecto?
-```

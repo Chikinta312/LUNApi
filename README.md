@@ -1,4 +1,4 @@
-(https://github.com/Chikinta312/LUNApi/blob/main/Logo%20LUNA3.0.png )
+![Demo de LUNA](images/luna-demo.jpg)
 
 ````markdown
 # LUNA 3.0 – Asistente Virtual por Voz

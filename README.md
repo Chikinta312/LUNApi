@@ -29,7 +29,7 @@ como `SpeechRecognition`, `pyttsx3`, `feedparser`, `requests`, y `Ollama`
 - Conexión a internet
 - Micrófono USB o incorporado
 - Parlante o salida de audio funcional
-- Tarjeta SD de 16 GB o superior
+- Tarjeta SD de 16 GB o superior (si desea usar otros modelos se recomienda aumentar a minimo 64 GB)
 
 ### Librerías necesarias:
 

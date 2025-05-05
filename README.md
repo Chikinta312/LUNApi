@@ -1,4 +1,4 @@
-Claro, Fabián. Aquí tienes un ejemplo de `README.md` en formato Markdown, redactado para tu asistente virtual **LUNA 3.0**, pensado para ser usado en la plataforma [Editor.md](https://pandao.github.io/editor.md/en.html) o cualquier visor de Markdown:
+![Texto alternativo](ruta/de/la/imagen.jpg)
 
 ````markdown
 # LUNA 3.0 – Asistente Virtual por Voz

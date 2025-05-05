@@ -82,8 +82,9 @@ pip install -r requirements.txt
 
 ### 5. Ejecuta el asistente
 
+Ojo: debes estar dentro del entorno virtual:
 ```bash
-python luna.py
+python luna_asistente.py
 ```
 
 ---

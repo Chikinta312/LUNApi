@@ -44,7 +44,7 @@ pip install pyaudio
 
 ---
 
-Para instalar tu asistente virtual **LUNA 3.0** en una Raspberry Pi 5 (u otro sistema compatible), puedes crear una sección clara en el `README.md` con instrucciones paso a paso. Aquí te dejo un ejemplo bien estructurado que puedes copiar y adaptar:
+Para instalar tu asistente virtual **LUNA 3.0** en una Raspberry Pi 5 (u otro sistema compatible), debes seguir los siguientes pasos.
 
 ---
 

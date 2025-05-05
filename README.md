@@ -5,7 +5,7 @@
 
 **LUNA 3.0** es un asistente virtual activado por comandos de voz, diseñado para brindar soporte
 y compañía a personas con movilidad reducida en el hogar. Desarrollado en Python y optimizado
-para funcionar en una Raspberry Pi 5, LUNA integra reconocimiento de voz, síntesis de voz natural,
+para funcionar en sistmas operativos como Windows o una Raspberry Pi 5, LUNA integra reconocimiento de voz, síntesis de voz natural,
 consultas inteligentes, lectura de noticias vía RSS, clima, calendario, y más.
 
 ---

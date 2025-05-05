@@ -13,8 +13,7 @@ consultas inteligentes, lectura de noticias vía RSS, clima, calendario, y más.
 ## 📌 Introducción
 
 El objetivo de LUNA 3.0 es ofrecer un sistema de asistencia inteligente que permita interactuar
-por voz con tareas cotidianas, adaptándose al entorno doméstico de adultos mayores o personas
-con movilidad limitada.
+por voz con tareas cotidianas o de oficina.
 
 Este proyecto forma parte de una tesis universitaria y emplea tecnologías de código abierto
 como `SpeechRecognition`, `pyttsx3`, `feedparser`, `requests`, y `Ollama`

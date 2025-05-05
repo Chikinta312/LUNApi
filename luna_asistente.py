@@ -12,16 +12,18 @@ import feedparser
 
 # === Inicializar pyttsx3 ===
 engine = pyttsx3.init()
-engine.setProperty('rate', 170)
-engine.setProperty('volume', 1.0)
-engine.setProperty('voice', engine.getProperty('voices')[0].id)  # Puedes cambiar el índice si deseas otra voz
+engine.setProperty('rate', 170)  # Velocidad de habla
+engine.setProperty('volume', 1.0)  # Volumen máximo
+engine.setProperty('voice', engine.getProperty('voices')[0].id)  # Voz en español
 
 def speak(text):
+    """Función para que el asistente hable."""
     print(f"Luna: {text}")
     engine.say(text)
     engine.runAndWait()
 
 def listen():
+    """Función para escuchar la voz del usuario."""
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
         print("🎙️ Di algo...")
@@ -30,12 +32,13 @@ def listen():
     try:
         return recognizer.recognize_google(audio, language="es-ES")
     except sr.UnknownValueError:
-        speak("No entendí lo que dijiste.")
+        return ""
     except sr.RequestError:
         speak("Error de conexión con el servicio de reconocimiento.")
-    return ""
+        return ""
 
 def detectar_pregunta_local(texto):
+    """Detecta qué tipo de pregunta hace el usuario."""
     texto = texto.lower()
     if "clima" in texto:
         return "clima"
@@ -56,29 +59,33 @@ def detectar_pregunta_local(texto):
     return None
 
 def responder_pregunta_local(tipo):
-    now = datetime.now()
+    """Responde preguntas locales como hora o fecha."""
+    ahora = datetime.now()
     if tipo == "hora":
-        return f"Es la hora {now.strftime('%H:%M')}."
+        return f"Son las {ahora.strftime('%H:%M')}."
     elif tipo == "fecha":
-        return f"Hoy es {now.strftime('%A, %d de %B de %Y')}."
+        return f"Hoy es {ahora.strftime('%A, %d de %B de %Y')}."
 
 def responder_fecha_futura(momento):
-    now = datetime.now()
+    """Responde sobre fechas futuras como 'mañana' o 'pasado mañana'."""
+    ahora = datetime.now()
     dias = 1 if momento == "mañana" else 2
-    fecha = now + timedelta(days=dias)
+    fecha = ahora + timedelta(dias=dias)
     return f"{momento.capitalize()} será {fecha.strftime('%A, %d de %B de %Y')}."
 
 def responder_dias_semana(dia):
+    """Responde con la fecha del próximo día de la semana solicitado."""
     hoy = datetime.now()
     dias = {"lunes": 0, "martes": 1, "miércoles": 2, "jueves": 3, "viernes": 4, "sábado": 5, "domingo": 6}
     dia_objetivo = dias.get(dia.lower())
     if dia_objetivo is None:
         return "No entendí qué día mencionaste."
     diferencia = (dia_objetivo - hoy.weekday()) % 7
-    fecha = hoy + timedelta(days=diferencia)
+    fecha = hoy + timedelta(dias=diferencia)
     return f"El próximo {dia} será {fecha.strftime('%A, %d de %B de %Y')}."
 
 def dias_faltantes_para_fecha(texto):
+    """Calcula cuántos días faltan hasta una fecha específica."""
     match = re.search(r'(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)', texto.lower())
     if not match:
         return "No pude entender la fecha que mencionaste."
@@ -92,10 +99,12 @@ def dias_faltantes_para_fecha(texto):
     return f"Faltan {dias} días para el {fecha_obj.strftime('%d de %B de %Y')}."
 
 def obtener_noticias():
+    """Obtiene las últimas 5 noticias de Google News RSS, con un titular por fuente."""
     url = "https://news.google.com/rss?hl=es-419&gl=PE&ceid=PE:es"
     noticias = feedparser.parse(url)
     if not noticias.entries:
         return "No se encontraron noticias."
+
     resultado = ""
     fuentes_usadas = set()
     contador = 0
@@ -103,17 +112,31 @@ def obtener_noticias():
         fuente = entrada.get("source", {}).get("title", "Fuente desconocida")
         if fuente in fuentes_usadas:
             continue
-        resumen = BeautifulSoup(entrada.summary, "html.parser").get_text().strip()
-        contador += 1
-        resultado += f"{resumen} (Fuente: {fuente}).\n"
+        
+        # Obtener solo el titular de la noticia
+        titular = BeautifulSoup(entrada.title, "html.parser").get_text().strip()
+        
+        # Añadir la noticia al resultado, sin repetir la fuente
+        if contador == 0:
+            resultado += f"{titular} (Fuente: {fuente})"
+        else:
+            resultado += f"\n{titular} (Fuente: {fuente})"
+        
+        # Marcar la fuente como usada
         fuentes_usadas.add(fuente)
+        
+        # Limitar a 5 noticias
+        contador += 1
         if contador == 5:
             break
+
     if contador == 0:
         return "No se encontraron noticias únicas de diferentes fuentes."
+    
     return resultado.strip()
 
 def consultar_clima(ciudad="Lima"):
+    """Consulta el clima actual de la ciudad dada."""
     try:
         response = requests.get(f"https://wttr.in/{ciudad}?format=3", timeout=5)
         if response.ok:
@@ -124,6 +147,7 @@ def consultar_clima(ciudad="Lima"):
         return "No se pudo acceder al servicio del clima."
 
 def ask_ollama_streaming(prompt):
+    """Consultas el modelo Gemma3 1B para obtener respuestas dinámicas."""
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
@@ -152,36 +176,45 @@ def ask_ollama_streaming(prompt):
         speak(f"Error de conexión: {e}")
 
 def main():
-    speak("Hola, soy Luna. ¿En qué puedo ayudarte?")
+    """Función principal donde el asistente escucha y responde a los comandos del usuario."""
+    speak("Hola, soy Luna. Di 'Luna' seguido de tu solicitud para comenzar.")
     while True:
         user_input = listen()
         if not user_input:
             continue
-        if "salir" in user_input.lower():
+        user_input = user_input.lower()
+        if not user_input.startswith("luna"):
+            continue
+
+        comando = user_input[4:].strip()
+
+        if "salir" in comando:
             speak("Adiós, hasta pronto.")
             break
-        tipo = detectar_pregunta_local(user_input)
+
+        tipo = detectar_pregunta_local(comando)
+
         if tipo == "hora" or tipo == "fecha":
             speak(responder_pregunta_local(tipo))
         elif tipo == "futuro":
-            if "pasado mañana" in user_input:
+            if "pasado mañana" in comando:
                 speak(responder_fecha_futura("pasado mañana"))
             else:
                 speak(responder_fecha_futura("mañana"))
         elif tipo == "dias_semana":
             for d in ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]:
-                if d in user_input.lower():
+                if d in comando:
                     speak(responder_dias_semana(d))
                     break
         elif tipo == "falta_fecha":
-            speak(dias_faltantes_para_fecha(user_input))
+            speak(dias_faltantes_para_fecha(comando))
         elif tipo == "noticias":
             speak(obtener_noticias())
         elif tipo == "clima":
             speak(consultar_clima())
         else:
             print("Luna está procesando tu solicitud con el modelo de lenguaje.")
-            ask_ollama_streaming(user_input)
+            ask_ollama_streaming(comando)
 
 if __name__ == "__main__":
     try:

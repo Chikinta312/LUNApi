@@ -129,8 +129,8 @@ la privacidad del usuario. No se envía información personal a servidores exter
 
 **Fabián Andrés Chiquinta Veramendi**
 Estudiante de Ingeniería Electrónica – UTP
-📧 Contacto: \[[tu\_correo@ejemplo.com](mailto:fabian312chv@gmail.com)]
-🔗 GitHub: [https://github.com/TU\_USUARIO](https://github.com/Chikinta312)
+📧 Contacto: \[[](mailto:fabian312chv@gmail.com)]
+🔗 GitHub: [](https://github.com/Chikinta312)
 
 ---
 

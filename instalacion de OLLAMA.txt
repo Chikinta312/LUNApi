@@ -1,9 +1,11 @@
+___________________________________________________________________________________________________
 Abrir la terminal de la Raspberry Pi (64bits) e instalar el sistema Ollama.
+___________________________________________________________________________________________________
 SISTEMA PARA RPI5 (LINUX):
 curl -fsSL https://ollama.com/install.sh | sh
-
+___________________________________________________________________________________________________
 Luego en la misma terminal, instalar el modelo a utilizar, en este caso sera el modelo Gemma3.
-MODELO:
-ollama run gemma3:4b
 
+ollama run gemma3:4b
+___________________________________________________________________________________________________
 Ojo: Si desea cambiar el modelo, debera modificar el codigo Python en el apartado correspondiente.

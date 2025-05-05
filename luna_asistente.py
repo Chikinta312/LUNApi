@@ -189,3 +189,4 @@ if __name__ == "__main__":
     except Exception as e:
         speak(f"Ocurrió un error inesperado: {e}")
 
+

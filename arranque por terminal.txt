@@ -1,6 +1,7 @@
-Iniciar el asistente manualmente por terminal:
-source /home/luna/LUNApi/venv/bin/activate
+Iniciar el asistente manualmente por terminal de la raspberry pi:
 
-cd /home/luna/LUNApi
+1) source /home/luna/LUNApi/venv/bin/activate
 
-python3 luna_asistente.py
+2) cd /home/luna/LUNApi
+
+3) python3 luna_asistente.py

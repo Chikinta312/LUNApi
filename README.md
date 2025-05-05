@@ -26,7 +26,7 @@ como `SpeechRecognition`, `pyttsx3`, `feedparser`, `requests`, y `Ollama`
 
 - Raspberry Pi 5 (4 GB RAM recomendado)
 - Sistema operativo Raspberry Pi OS (64 bits)
-- Python 3.9 o superior
+- Python 3.13.3 o superior
 - Conexión a internet
 - Micrófono USB o incorporado
 - Parlante o salida de audio funcional

@@ -1,6 +1,6 @@
 ![Demo de LUNA](images/Logo%20LUNA3.0.png)
 
-````markdown
+
 # LUNA 3.0 – Asistente Virtual por Voz
 
 **LUNA 3.0** es un asistente virtual activado por comandos de voz, diseñado para brindar soporte

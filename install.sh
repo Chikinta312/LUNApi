@@ -3,14 +3,13 @@
 # Actualización de repositorios y paquetes del sistema
 echo "Actualizando los repositorios y paquetes del sistema..."
 sudo apt-get update -y
-sudo apt-get upgrade -y
-sudo apt-get dist-upgrade -y
 
 # Instalación de dependencias del sistema
 echo "Instalando dependencias necesarias..."
 sudo apt-get install -y python3-pip python3-dev python3-setuptools build-essential \
 libasound2-dev libjack-dev libsndfile1 libsndfile1-dev portaudio19-dev \
-ffmpeg libatlas-base-dev libsox-fmt-all espeak
+ffmpeg libatlas-base-dev libsox-fmt-all espeak libportaudio2 \
+libcurl4-openssl-dev libssl-dev
 
 # Instalación de las librerías necesarias para Python
 echo "Instalando librerías necesarias para Python..."

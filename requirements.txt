@@ -1,5 +1,7 @@
-speechrecognition
 pyttsx3
 requests
-beautifulsoup4
+speechrecognition
 feedparser
+beautifulsoup4
+sounddevice
+numpy

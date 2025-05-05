@@ -22,7 +22,7 @@ como `SpeechRecognition`, `pyttsx3`, `feedparser`, `requests`, y `Ollama`
 
 ---
 
-## ⚙️ Requisitos
+## ⚙️ Requisitos Minimos:
 
 - Raspberry Pi 5 (4 GB RAM recomendado)
 - Sistema operativo Raspberry Pi OS (64 bits)
@@ -44,26 +44,64 @@ pip install pyaudio
 
 ---
 
-## 🚀 Instalación
+Para instalar tu asistente virtual **LUNA 3.0** en una Raspberry Pi 5 (u otro sistema compatible), puedes crear una sección clara en el `README.md` con instrucciones paso a paso. Aquí te dejo un ejemplo bien estructurado que puedes copiar y adaptar:
 
-1. **Clona este repositorio:**
+---
+
+## 🛠️ Instalación
+
+Sigue los siguientes pasos para instalar y ejecutar LUNA 3.0 en tu dispositivo:
+
+### 1. Clona el repositorio
 
 ```bash
-git clone https://github.com/TU_USUARIO/LUNA-3.0.git
-cd LUNA-3.0
+git clone https://github.com/Chikinta312/LUNApi.git
+cd LUNApi
 ```
 
-2. **Instala las dependencias:**
+### 2. Crea y activa un entorno virtual (opcional pero recomendado)
+
+```bash
+python3 -m venv env
+source env/bin/activate  # En Linux o macOS
+env\Scripts\activate     # En Windows
+```
+
+### 3. Instala las dependencias
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Ejecuta el asistente:**
+> Asegúrate de que `requirements.txt` esté correctamente definido. Si no lo tienes, puedo ayudarte a generarlo.
+
+### 4. Configura tu micrófono y parlante
+
+* Verifica que el micrófono USB y el parlante funcionen correctamente.
+* Puedes probar con comandos como `arecord` y `aplay` en Raspberry Pi OS.
+
+### 5. Ejecuta el asistente
 
 ```bash
 python luna.py
 ```
+
+---
+
+### 📌 Notas adicionales
+
+* Asegúrate de estar conectado a internet.
+* En este caso se uso el modelo Gemma3 1B, debido que es el unico modelo que puede arrancar en una RPI5B de 4GB RAM. 
+  Si desea usar los Modelos (4b, 12b) tendra que usar una RPI de 8GB RAM en adelante, para el 27b usar una RPI de 16GB RAM.
+* El modelo Gemma3 1B debe estar corriendo en Ollama. Puedes iniciarlo con:
+
+```bash
+ollama run gemma:1b
+```
+
+* Si deseas configurar el modelo como servicio o usar comandos de voz para activarlo, añade detalles en `config.py` o donde se defina la lógica.
+
+---
 
 ---
 
@@ -90,8 +128,8 @@ la privacidad del usuario. No se envía información personal a servidores exter
 
 **Fabián Andrés Chiquinta Veramendi**
 Estudiante de Ingeniería Electrónica – UTP
-📧 Contacto: \[[tu\_correo@ejemplo.com](mailto:tu_correo@ejemplo.com)]
-🔗 GitHub: [https://github.com/TU\_USUARIO](https://github.com/TU_USUARIO)
+📧 Contacto: \[[tu\_correo@ejemplo.com](mailto:fabian312chv@gmail.com)]
+🔗 GitHub: [https://github.com/TU\_USUARIO](https://github.com/Chikinta312)
 
 ---
 

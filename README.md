@@ -54,6 +54,8 @@ Sigue los siguientes pasos para instalar y ejecutar LUNA 3.0 en tu dispositivo:
 Para Windows solo descargar el archivo Python y subirlo a tu Visual Studio Code, se recomienda instalar previamente Ollama en tu dispositivo
 con la version de su modelo que desee utilziar (el codigo esta diseñado para el modelo Gemma3:1b)
 
+Ahora si para instalarlo en tu RPI 5B:
+
 ### 1. Clona el repositorio
 
 ```bash

@@ -1,7 +1,0 @@
-pyttsx3
-requests
-speechrecognition
-feedparser
-beautifulsoup4
-sounddevice
-numpy

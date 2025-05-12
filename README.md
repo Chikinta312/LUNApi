@@ -64,7 +64,7 @@ env\Scripts\activate     # En Windows
 ```
 
 ### 3. **Instala las dependencias**
-
+Debes estar dentro del entorno virtual (venv) para instalar las librerias:
 ```bash
 pip install SpeechRecognition
 pip install pyttsx3

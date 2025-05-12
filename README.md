@@ -47,7 +47,8 @@ Para instalar tu asistente virtual **LUNA 3.0** en una Raspberry Pi 5 (u otro si
 
 Sigue los siguientes pasos para instalar y ejecutar **LUNA 3.0** en tu dispositivo:
 
-### 1. **Clona el repositorio**
+### 1. **Copia el archivo Python a su RPI:**
+Puedes copiar el arhivo en Python por un USB a su Raspberry Pi, pero tambien puedes clonar el repositorio con:
 
 ```bash
 git clone https://github.com/Chikinta312/LUNApi.git
@@ -55,7 +56,7 @@ cd LUNApi
 ```
 
 ### 2. **Crea y activa un entorno virtual (opcional pero recomendado)**
-
+Esto se los recomiendo mucho para evitar conflicto con otras librerias.
 ```bash
 python3 -m venv env
 source env/bin/activate  # En Linux o macOS
@@ -65,13 +66,15 @@ env\Scripts\activate     # En Windows
 ### 3. **Instala las dependencias**
 
 ```bash
-pip install -r requirements.txt
-```
+pip install SpeechRecognition
+pip install pyttsx3
+pip install feedparser
+pip install requests
+pip install pyaudio
+pip install sounddevice
+pip install gTTS
+pip install playsound
 
-> Asegúrate de que `requirements.txt` esté correctamente definido. Si no lo tienes, puedes usar el siguiente comando para generar uno:
-
-```bash
-pip freeze > requirements.txt
 ```
 
 ### 4. **Configura tu micrófono y parlante**
@@ -93,15 +96,88 @@ Para ejecutar el modelo **Gemma3:1b**, usa el siguiente comando:
 ollama run gemma3:1b
 ```
 
-> **Nota**: Si deseas ejecutar el modelo Gemma3:1b como servicio para que se inicie automáticamente al arrancar la Raspberry Pi, puedes agregarlo a los servicios de inicio.
+### 6. **Crea un archivo de inicio automático**
 
-### 6. **Ejecuta el asistente**
+#### Opción A: Usar `crontab`
 
-Ojo: debes estar dentro del entorno virtual:
+Edita el `crontab` del usuario `pi`:
 
 ```bash
-python luna_asistente.py
+crontab -e
 ```
+
+Agrega al final:
+
+```bash
+@reboot /home/pi/luna_env/bin/python /home/pi/luna_asistente.py
+```
+
+> Asegúrate de que la ruta al entorno virtual y al script sea correcta.
+
+#### Opción B: Usar un servicio systemd (más profesional y recomendado)
+
+1. Crea el archivo de servicio:
+
+```bash
+sudo nano /etc/systemd/system/luna.service
+```
+
+2. Pega el siguiente contenido:
+
+```ini
+[Unit]
+Description=Asistente Luna
+After=network.target
+
+[Service]
+ExecStart=/home/pi/luna_env/bin/python /home/pi/luna_asistente.py
+WorkingDirectory=/home/pi/
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+```
+
+3. Habilita e inicia el servicio:
+
+```bash
+sudo systemctl daemon-reexec
+sudo systemctl enable luna.service
+sudo systemctl start luna.service
+```
+
+---
+
+### 7. **Prueba el funcionamiento del asistente**
+
+Ejecuta manualmente primero para verificar que funcione correctamente:
+
+```bash
+source ~/luna_env/bin/activate
+python ~/luna_asistente.py
+```
+
+Dile comandos como:
+
+* **"Luna, enciende la luz de la sala."**
+* **"Luna, ¿qué hora es?"**
+* **"Luna, ¿cómo está el clima?"**
+* **"Luna, apaga la luz del dormitorio."**
+* **"Luna, dame las noticias."**
+
+---
+
+### 8. **Reinicia la Raspberry Pi y verifica**
+
+```bash
+sudo reboot
+```
+
+Después del reinicio:
+
+* El asistente debería comenzar a ejecutarse automáticamente. (Se demora al rededor de 3-5 minutos)
+* Prueba nuevamente diciendo "Luna..." y un comando.
 
 ---
 
